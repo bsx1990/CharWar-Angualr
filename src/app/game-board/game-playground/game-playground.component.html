@@ -1,0 +1,22 @@
+<div class="game-playground">
+  <div class="cards-playground">
+    <div
+      class="row"
+      *ngFor="let rowCards of playgroundCards; let rowIndex = index"
+    >
+      <div
+        class="card card-in-playground"
+        *ngFor="let card of rowCards; let columnIndex = index"
+        (click)="clickCard(rowIndex, columnIndex)"
+      >
+        {{ card }}
+      </div>
+    </div>
+  </div>
+
+  <div class="candidate-cards">
+    <div class="card candidate-card" *ngFor="let card of candidateCards">
+      {{ card }}
+    </div>
+  </div>
+</div>

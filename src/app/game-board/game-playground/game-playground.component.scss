@@ -1,0 +1,49 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.game-playground {
+  position: relative;
+  background: #47565a;
+
+  .cards-playground {
+    width: fit-content;
+    background: #336e7b;
+    padding: 6px;
+
+    .row {
+      width: fit-content;
+      display: flex;
+    }
+  }
+
+  .card {
+    display: inline-block;
+    text-align: center;
+    width: 100px;
+    height: 100px;
+    background: #86b5bd;
+    margin: 6px;
+    line-height: 100px;
+    font-size: 60px;
+  }
+
+  .candidate-cards {
+    height: 140px;
+    background: #47565a;
+    text-align: center;
+    line-height: 140px;
+  }
+
+  .candidate-card {
+    margin-bottom: 20px;
+    vertical-align: bottom;
+
+    &:last-child {
+      line-height: 80px;
+      width: 80px;
+      height: 80px;
+      font-size: 48px;
+    }
+  }
+}
