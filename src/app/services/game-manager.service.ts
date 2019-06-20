@@ -79,6 +79,8 @@ export class GameManagerService {
     this.emitCandidateCardsChanged();
 
     this.playgroundCards[rowIndex][columnIndex] = currentCandidateCard;
+    this.emitPlaygroundCardsChanged();
+
     let combinedCardsIndexs = this.getSameCardsFromAround(
       rowIndex,
       columnIndex

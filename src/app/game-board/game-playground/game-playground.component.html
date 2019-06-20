@@ -6,10 +6,15 @@
     >
       <div
         class="card card-in-playground"
-        *ngFor="let card of rowCards; let columnIndex = index"
+        *ngFor="
+          let card of rowCards;
+          let columnIndex = index;
+          trackBy: trackByCardId
+        "
+        [@CardUpAndDown]="card.value ? 'not-empty' : 'empty'"
         (click)="clickCard(rowIndex, columnIndex)"
       >
-        {{ card }}
+        {{ card.value }}
       </div>
     </div>
   </div>
