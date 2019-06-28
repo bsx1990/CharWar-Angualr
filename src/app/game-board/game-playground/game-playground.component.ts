@@ -3,13 +3,8 @@ import { GameManagerService } from "./../../services/game-manager.service";
 import { Component, OnInit } from "@angular/core";
 import { EmitService } from "src/app/services/emit.service";
 import { EVENT_TYPE } from "src/app/config/game-config";
-import {
-  trigger,
-  state,
-  style,
-  transition,
-  animate
-} from "@angular/animations";
+import { trigger, state, style, transition, animate } from "@angular/animations";
+import * as io from "socket.io-client";
 
 @Component({
   selector: "game-playground",
@@ -37,10 +32,7 @@ export class GamePlaygroundComponent implements OnInit {
   public playgroundCards;
   public candidateCards = this.gameManagerService.candidateCards;
 
-  constructor(
-    public emitService: EmitService,
-    public gameManagerService: GameManagerService
-  ) {
+  constructor(public emitService: EmitService, public gameManagerService: GameManagerService) {
     this.initPlaygroundCards();
   }
 
@@ -74,13 +66,14 @@ export class GamePlaygroundComponent implements OnInit {
     const cards = this.gameManagerService.playgroundCards;
     for (let rowIndex = 0; rowIndex < PLAYGROUND_SIZE; rowIndex++) {
       for (let columnIndex = 0; columnIndex < PLAYGROUND_SIZE; columnIndex++) {
-        this.playgroundCards[rowIndex][columnIndex].value =
-          cards[rowIndex][columnIndex];
+        this.playgroundCards[rowIndex][columnIndex].value = cards[rowIndex][columnIndex];
       }
     }
   }
 
   public clickCard(rowIndex: number, columnIndex: number) {
+    var socket = io("ws://localhost:1001");
+    socket.emit("clickCard");
     this.gameManagerService.clickCard(rowIndex, columnIndex);
   }
 
