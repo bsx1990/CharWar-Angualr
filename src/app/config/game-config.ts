@@ -19,7 +19,8 @@ export const ARROW = {
 };
 
 export const RequestType = {
-  getData: "getData"
+  getData: "getData",
+  clickCard: "clickCard"
 };
 
 export const ResponseType = {
