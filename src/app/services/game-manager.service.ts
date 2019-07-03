@@ -1,12 +1,8 @@
+import { HOST } from "./../config/game-config";
 import { Injectable } from "@angular/core";
-import {
-  PLAYGROUND_SIZE,
-  // CARD_VALUE,
-  EVENT_TYPE,
-  MAX_GENERATED_CARD,
-  ARROW
-} from "../config/game-config";
+import { PLAYGROUND_SIZE, EVENT_TYPE, MAX_GENERATED_CARD, ARROW, RequestType, ResponseType } from "../config/game-config";
 import { EmitService } from "./emit.service";
+import * as io from "socket.io-client";
 
 @Injectable({
   providedIn: "root"
@@ -14,35 +10,39 @@ import { EmitService } from "./emit.service";
 export class GameManagerService {
   public playgroundCards = [];
   public candidateCards = [];
+  socket = io(HOST);
 
   constructor(public emitService: EmitService) {
+    this.setSubscribe();
     this.initialService();
   }
 
-  private initialService() {
-    this.playgroundCards = this.getDefaultPlaygroundCards();
-    this.emitPlaygroundCardsChanged();
+  private setSubscribe() {
+    this.socket.on(ResponseType.playgroundCardsChanged, data => {
+      this.playgroundCards = data;
+      console.log("Received playgroundCardsChanged, current playgroundCards is:");
+      console.log(this.playgroundCards);
+      this.emitPlaygroundCardsChanged();
+    });
 
-    this.appendCandidateCard();
-    this.appendCandidateCard();
-    this.emitCandidateCardsChanged();
+    this.socket.on(ResponseType.candidateCardsChanged, data => {
+      this.candidateCards = data;
+      console.log("Received candidateCardsChanged, current candidateCards is:");
+      console.log(this.candidateCards);
+      this.emitCandidateCardsChanged();
+    });
   }
 
-  getDefaultPlaygroundCards() {
-    const result = [];
-    for (let row = 0; row < PLAYGROUND_SIZE; row++) {
-      result[row] = [];
-      for (let column = 0; column < PLAYGROUND_SIZE; column++) {
-        result[row][column] = null;
-      }
-    }
-    return result;
+  private initialService() {
+    this.getData();
+  }
+
+  getData() {
+    this.socket.emit(RequestType.getData);
   }
 
   generateCard() {
-    let maxCard = Math.max(
-      ...Array.prototype.concat.apply([], this.playgroundCards)
-    );
+    let maxCard = Math.max(...Array.prototype.concat.apply([], this.playgroundCards));
     if (isNaN(maxCard)) {
       maxCard = 0;
     }
@@ -63,12 +63,7 @@ export class GameManagerService {
   }
 
   clickCard(rowIndex: number, columnIndex: number) {
-    console.log(
-      "received click card request, rowIndex:" +
-        rowIndex +
-        ", columnIndex: " +
-        columnIndex
-    );
+    console.log("received click card request, rowIndex:" + rowIndex + ", columnIndex: " + columnIndex);
 
     if (this.playgroundCards[rowIndex][columnIndex] != null) {
       return;
@@ -81,10 +76,7 @@ export class GameManagerService {
     this.playgroundCards[rowIndex][columnIndex] = currentCandidateCard;
     this.emitPlaygroundCardsChanged();
 
-    let combinedCardsIndexs = this.getSameCardsFromAround(
-      rowIndex,
-      columnIndex
-    );
+    let combinedCardsIndexs = this.getSameCardsFromAround(rowIndex, columnIndex);
     while (combinedCardsIndexs.length > 0) {
       this.combineCards(combinedCardsIndexs, rowIndex, columnIndex);
       this.emitPlaygroundCardsChanged();
@@ -92,49 +84,30 @@ export class GameManagerService {
     }
   }
 
-  private combineCards(
-    combinedCardsIndexs: any[],
-    rowIndex: number,
-    columnIndex: number
-  ) {
+  private combineCards(combinedCardsIndexs: any[], rowIndex: number, columnIndex: number) {
     combinedCardsIndexs.forEach(index => {
       this.playgroundCards[index[0]][index[1]] = null;
     });
 
-    this.playgroundCards[rowIndex][columnIndex] =
-      this.playgroundCards[rowIndex][columnIndex] + 1;
+    this.playgroundCards[rowIndex][columnIndex] = this.playgroundCards[rowIndex][columnIndex] + 1;
   }
 
   private getSameCardsFromAround(rowIndex: number, columnIndex: number) {
     const centerCard = this.playgroundCards[rowIndex][columnIndex];
     let result = [];
 
-    const arrows = [
-      ARROW.LEFT_UP,
-      ARROW.UP,
-      ARROW.RIGHT_UP,
-      ARROW.LEFT,
-      ARROW.RIGHT,
-      ARROW.LEFT_DOWN,
-      ARROW.DOWN,
-      ARROW.RIGHT_DOWN
-    ];
+    const arrows = [ARROW.LEFT_UP, ARROW.UP, ARROW.RIGHT_UP, ARROW.LEFT, ARROW.RIGHT, ARROW.LEFT_DOWN, ARROW.DOWN, ARROW.RIGHT_DOWN];
     arrows.forEach(arrow => {
       const columnOffset = arrow[0];
       const rowOffset = arrow[1];
       const targetRowIndex = rowIndex + rowOffset;
       const targetColumnIndex = columnIndex + columnOffset;
 
-      if (
-        this.isOutofPlaygroundRange(targetRowIndex) ||
-        this.isOutofPlaygroundRange(targetColumnIndex)
-      ) {
+      if (this.isOutofPlaygroundRange(targetRowIndex) || this.isOutofPlaygroundRange(targetColumnIndex)) {
         return;
       }
 
-      if (
-        this.playgroundCards[targetRowIndex][targetColumnIndex] === centerCard
-      ) {
+      if (this.playgroundCards[targetRowIndex][targetColumnIndex] === centerCard) {
         result.push([targetRowIndex, targetColumnIndex]);
       }
     });

@@ -1,13 +1,6 @@
 export const PLAYGROUND_SIZE = 4;
 export const MAX_GENERATED_CARD = 9;
-
-// export const CARD_VALUE = {
-//   empty: "",
-//   1: "1",
-//   2: "2",
-//   3: "3",
-//   4: ""
-// };
+export const HOST = "ws://localhost:1001";
 
 export const EVENT_TYPE = {
   playgroundCardsChanged: "PlaygroundCardsChanged",
@@ -23,4 +16,13 @@ export const ARROW = {
   LEFT_DOWN: [-1, 1],
   DOWN: [0, 1],
   RIGHT_DOWN: [1, 1]
+};
+
+export const RequestType = {
+  getData: "getData"
+};
+
+export const ResponseType = {
+  playgroundCardsChanged: "playgroundCardsChanged",
+  candidateCardsChanged: "CandidateCardsChanged"
 };

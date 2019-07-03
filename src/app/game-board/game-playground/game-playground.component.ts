@@ -4,7 +4,6 @@ import { Component, OnInit } from "@angular/core";
 import { EmitService } from "src/app/services/emit.service";
 import { EVENT_TYPE } from "src/app/config/game-config";
 import { trigger, state, style, transition, animate } from "@angular/animations";
-import * as io from "socket.io-client";
 
 @Component({
   selector: "game-playground",
@@ -72,8 +71,6 @@ export class GamePlaygroundComponent implements OnInit {
   }
 
   public clickCard(rowIndex: number, columnIndex: number) {
-    var socket = io("ws://localhost:1001");
-    socket.emit("clickCard");
     this.gameManagerService.clickCard(rowIndex, columnIndex);
   }
 
