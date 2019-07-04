@@ -55,7 +55,7 @@ export class GameManagerService {
   }
 
   getData() {
-    this.socket.emit(RequestType.getData);
+    this.socket.emit(RequestType.getData, this.socket.id);
   }
 
   private emitPlaygroundCardsChanged() {
