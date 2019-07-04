@@ -4,7 +4,9 @@ export const HOST = "ws://localhost:1001";
 
 export const EVENT_TYPE = {
   playgroundCardsChanged: "PlaygroundCardsChanged",
-  candidateCardsChanged: "CandidateCardsChanged"
+  candidateCardsChanged: "CandidateCardsChanged",
+  scoreChanged: "ScoreChanged",
+  bestScoreChanged: "BestScoreChanged"
 };
 
 export const ARROW = {
@@ -25,5 +27,7 @@ export const RequestType = {
 
 export const ResponseType = {
   playgroundCardsChanged: "playgroundCardsChanged",
-  candidateCardsChanged: "CandidateCardsChanged"
+  candidateCardsChanged: "CandidateCardsChanged",
+  scoreChanged: "ScoreChanged",
+  bestScoreChanged: "BestScoreChanged"
 };

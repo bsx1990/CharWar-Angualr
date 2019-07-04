@@ -10,7 +10,10 @@ import * as io from "socket.io-client";
 export class GameManagerService {
   public playgroundCards = [];
   public candidateCards = [];
-  socket = io(HOST);
+  public score = 0;
+  public bestScore = 0;
+
+  private socket = io(HOST);
 
   constructor(public emitService: EmitService) {
     this.setSubscribe();
@@ -31,6 +34,20 @@ export class GameManagerService {
       console.log(this.candidateCards);
       this.emitCandidateCardsChanged();
     });
+
+    this.socket.on(ResponseType.scoreChanged, data => {
+      this.score = data;
+      console.log("Received scoreChanged, current score is:");
+      console.log(this.score);
+      this.emitScoreChanged();
+    });
+
+    this.socket.on(ResponseType.bestScoreChanged, data => {
+      this.bestScore = data;
+      console.log("Received bestScoreChanged, current bestScore is:");
+      console.log(this.bestScore);
+      this.emitBestScoreChanged();
+    });
   }
 
   private initialService() {
@@ -47,6 +64,14 @@ export class GameManagerService {
 
   private emitCandidateCardsChanged() {
     this.emitService.eventEmit.emit(EVENT_TYPE.candidateCardsChanged);
+  }
+
+  private emitScoreChanged() {
+    this.emitService.eventEmit.emit(EVENT_TYPE.scoreChanged);
+  }
+
+  private emitBestScoreChanged() {
+    this.emitService.eventEmit.emit(EVENT_TYPE.bestScoreChanged);
   }
 
   clickCard(rowIndex: number, columnIndex: number) {
