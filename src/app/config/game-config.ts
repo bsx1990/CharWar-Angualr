@@ -1,12 +1,15 @@
 export const PLAYGROUND_SIZE = 4;
 export const MAX_GENERATED_CARD = 9;
-export const HOST = "ws://localhost:1001";
+export const ANIMATION_TIME = 100;
+export const HOST = 'ws://localhost:1001';
+
+export const USING_STEP_BY_STEP_ANIMATION = false;
 
 export const EVENT_TYPE = {
-  playgroundCardsChanged: "PlaygroundCardsChanged",
-  candidateCardsChanged: "CandidateCardsChanged",
-  scoreChanged: "ScoreChanged",
-  bestScoreChanged: "BestScoreChanged"
+  playgroundCardsChanged: 'PlaygroundCardsChanged',
+  candidateCardsChanged: 'CandidateCardsChanged',
+  scoreChanged: 'ScoreChanged',
+  bestScoreChanged: 'BestScoreChanged'
 };
 
 export const ARROW = {
@@ -21,13 +24,13 @@ export const ARROW = {
 };
 
 export const RequestType = {
-  getData: "getData",
-  clickCard: "clickCard"
+  getData: 'getData',
+  clickCard: 'clickCard'
 };
 
 export const ResponseType = {
-  playgroundCardsChanged: "playgroundCardsChanged",
-  candidateCardsChanged: "CandidateCardsChanged",
-  scoreChanged: "ScoreChanged",
-  bestScoreChanged: "BestScoreChanged"
+  playgroundCardsChanged: 'playgroundCardsChanged',
+  candidateCardsChanged: 'CandidateCardsChanged',
+  scoreChanged: 'ScoreChanged',
+  bestScoreChanged: 'BestScoreChanged'
 };
