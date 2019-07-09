@@ -1,20 +1,20 @@
 <div class="game-playground">
   <div class="cards-playground">
-    <div
-      class="row"
-      *ngFor="let rowCards of playgroundCards; let rowIndex = index"
-    >
+    <div class="row" *ngFor="let rowCards of playgroundCards; let rowIndex = index">
       <div
         class="card card-in-playground"
-        *ngFor="
-          let card of rowCards;
-          let columnIndex = index;
-          trackBy: trackByCardId
-        "
+        *ngFor="let card of rowCards; let columnIndex = index; trackBy: trackByCardId"
         [@CardUpAndDown]="card.value ? 'not-empty' : 'empty'"
         (click)="clickCard(rowIndex, columnIndex)"
       >
         {{ card.value }}
+      </div>
+    </div>
+
+    <div class="game-over" *ngIf="isGameOver">
+      <h3 class="game-over-title">GAME OVER!!!</h3>
+      <div class="options">
+        <button (click)="replay()">Replay</button>
       </div>
     </div>
   </div>

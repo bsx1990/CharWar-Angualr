@@ -1,36 +1,37 @@
-import { PLAYGROUND_SIZE, ANIMATION_TIME, USING_STEP_BY_STEP_ANIMATION } from "./../../config/game-config";
-import { GameManagerService } from "./../../services/game-manager.service";
-import { Component, OnInit } from "@angular/core";
-import { EmitService } from "src/app/services/emit.service";
-import { EVENT_TYPE } from "src/app/config/game-config";
-import { trigger, state, style, transition, animate } from "@angular/animations";
-import { IntervalAutoSendQueue } from "src/app/infrastructure/interval-auto-send-queue";
+import { PLAYGROUND_SIZE, ANIMATION_TIME, USING_STEP_BY_STEP_ANIMATION } from './../../config/game-config';
+import { GameManagerService } from './../../services/game-manager.service';
+import { Component, OnInit } from '@angular/core';
+import { EmitService } from 'src/app/services/emit.service';
+import { EVENT_TYPE } from 'src/app/config/game-config';
+import { trigger, state, style, transition, animate } from '@angular/animations';
+import { IntervalAutoSendQueue } from 'src/app/infrastructure/interval-auto-send-queue';
 
 @Component({
-  selector: "game-playground",
-  templateUrl: "./game-playground.component.html",
-  styleUrls: ["./game-playground.component.scss"],
+  selector: 'game-playground',
+  templateUrl: './game-playground.component.html',
+  styleUrls: ['./game-playground.component.scss'],
   animations: [
-    trigger("CardUpAndDown", [
+    trigger('CardUpAndDown', [
       state(
-        "not-empty",
+        'not-empty',
         style({
-          backgroundColor: "#86b5bd"
+          backgroundColor: '#86b5bd'
         })
       ),
       state(
-        "empty",
+        'empty',
         style({
-          backgroundColor: "transparent"
+          backgroundColor: 'transparent'
         })
       ),
-      transition("empty <=> not-empty", [animate(ANIMATION_TIME)])
+      transition('empty <=> not-empty', [animate(ANIMATION_TIME)])
     ])
   ]
 })
 export class GamePlaygroundComponent implements OnInit {
   public playgroundCards;
   public candidateCards = this.gameManagerService.candidateCards;
+  public isGameOver = false;
 
   private playgroundCardsChangingQueue;
 
@@ -44,7 +45,7 @@ export class GamePlaygroundComponent implements OnInit {
       this.playgroundCards[rowIndex] = [];
       for (let columnIndex = 0; columnIndex < PLAYGROUND_SIZE; columnIndex++) {
         this.playgroundCards[rowIndex][columnIndex] = {
-          id: rowIndex + ";" + columnIndex,
+          id: rowIndex + ';' + columnIndex,
           value: null
         };
       }
@@ -64,9 +65,22 @@ export class GamePlaygroundComponent implements OnInit {
         }
       }
     });
+
     this.emitService.eventEmit.subscribe((value: any) => {
       if (value === EVENT_TYPE.candidateCardsChanged) {
         this.candidateCards = this.gameManagerService.candidateCards;
+      }
+    });
+
+    this.emitService.eventEmit.subscribe((value: any) => {
+      if (value === EVENT_TYPE.gameOver) {
+        this.isGameOver = true;
+      }
+    });
+
+    this.emitService.eventEmit.subscribe((value: any) => {
+      if (value === EVENT_TYPE.gameStart) {
+        this.isGameOver = false;
       }
     });
   }
@@ -85,5 +99,9 @@ export class GamePlaygroundComponent implements OnInit {
 
   public trackByCardId(index, card) {
     return card.id;
+  }
+
+  public replay() {
+    this.gameManagerService.replay();
   }
 }

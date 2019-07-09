@@ -59,6 +59,14 @@ export class GameManagerService {
       console.log(this.bestScore);
       this.emitBestScoreChanged();
     });
+
+    this.socket.on(ResponseType.gameOver, () => {
+      this.emitGameOver();
+    });
+
+    this.socket.on(ResponseType.gameStart, () => {
+      this.emitGameStart();
+    });
   }
 
   private initialService() {
@@ -85,7 +93,19 @@ export class GameManagerService {
     this.emitService.eventEmit.emit(EVENT_TYPE.bestScoreChanged);
   }
 
+  private emitGameOver() {
+    this.emitService.eventEmit.emit(EVENT_TYPE.gameOver);
+  }
+
+  private emitGameStart() {
+    this.emitService.eventEmit.emit(EVENT_TYPE.gameStart);
+  }
+
   clickCard(rowIndex: number, columnIndex: number) {
     this.socket.emit(RequestType.clickCard, rowIndex, columnIndex);
+  }
+
+  replay() {
+    this.socket.emit(RequestType.replay);
   }
 }

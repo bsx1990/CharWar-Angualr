@@ -10,6 +10,7 @@
     width: fit-content;
     background: #336e7b;
     padding: 6px;
+    position: relative;
 
     .row {
       width: fit-content;
@@ -18,6 +19,32 @@
       .card-in-playground {
         border: black solid 1px;
         box-sizing: border-box;
+      }
+    }
+
+    .game-over {
+      position: absolute;
+      height: 100%;
+      width: 100%;
+      background: #47565a;
+      top: 0;
+      left: 0;
+      opacity: 0.9;
+
+      .game-over-title {
+        color: #fff;
+        text-align: center;
+      }
+
+      .options {
+        text-align: center;
+
+        button {
+          min-width: 200px;
+          background: transparent;
+          border-color: black;
+          margin: 10px;
+        }
       }
     }
   }
@@ -38,17 +65,17 @@
     background: #47565a;
     text-align: center;
     line-height: 140px;
-  }
 
-  .candidate-card {
-    margin-bottom: 20px;
-    vertical-align: bottom;
+    .candidate-card {
+      margin-bottom: 20px;
+      vertical-align: bottom;
 
-    &:last-child {
-      line-height: 80px;
-      width: 80px;
-      height: 80px;
-      font-size: 48px;
+      &:last-child {
+        line-height: 80px;
+        width: 80px;
+        height: 80px;
+        font-size: 48px;
+      }
     }
   }
 }
