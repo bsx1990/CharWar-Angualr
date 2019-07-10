@@ -1,0 +1,13 @@
+.options {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 400px;
+
+  button {
+    min-width: 200px;
+    background: transparent;
+    border-color: black;
+    margin: 10px;
+  }
+}
