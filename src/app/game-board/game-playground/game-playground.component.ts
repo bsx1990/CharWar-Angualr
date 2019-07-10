@@ -1,8 +1,7 @@
-import { PLAYGROUND_SIZE, ANIMATION_TIME, USING_STEP_BY_STEP_ANIMATION } from './../../config/game-config';
+import { PLAYGROUND_SIZE, ANIMATION_TIME, USING_STEP_BY_STEP_ANIMATION, RESPONSE_TYPE } from './../../config/game-config';
 import { GameManagerService } from './../../services/game-manager.service';
 import { Component, OnInit } from '@angular/core';
 import { EmitService } from 'src/app/services/emit.service';
-import { EVENT_TYPE } from 'src/app/config/game-config';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { IntervalAutoSendQueue } from 'src/app/infrastructure/interval-auto-send-queue';
 
@@ -54,7 +53,7 @@ export class GamePlaygroundComponent implements OnInit {
 
   ngOnInit() {
     this.emitService.eventEmit.subscribe((value: any) => {
-      if (value === EVENT_TYPE.playgroundCardsChanged) {
+      if (value === RESPONSE_TYPE.playgroundCardsChanged) {
         if (USING_STEP_BY_STEP_ANIMATION) {
           if (this.playgroundCardsChangingQueue == null) {
             this.playgroundCardsChangingQueue = new IntervalAutoSendQueue(ANIMATION_TIME, data => this.UpdatePlaygroundCards(data));
@@ -67,13 +66,13 @@ export class GamePlaygroundComponent implements OnInit {
     });
 
     this.emitService.eventEmit.subscribe((value: any) => {
-      if (value === EVENT_TYPE.candidateCardsChanged) {
+      if (value === RESPONSE_TYPE.candidateCardsChanged) {
         this.candidateCards = this.gameManagerService.candidateCards;
       }
     });
 
     this.emitService.eventEmit.subscribe((value: any) => {
-      if (value === EVENT_TYPE.gameStateChanged) {
+      if (value === RESPONSE_TYPE.gameStateChanged) {
         this.isGameOver = this.gameManagerService.gameState === 'GameOver';
       }
     });

@@ -5,14 +5,6 @@ export const HOST = 'ws://192.168.12.65:1001';
 
 export const USING_STEP_BY_STEP_ANIMATION = false;
 
-export const EVENT_TYPE = {
-  playgroundCardsChanged: 'PlaygroundCardsChanged',
-  candidateCardsChanged: 'CandidateCardsChanged',
-  scoreChanged: 'ScoreChanged',
-  bestScoreChanged: 'BestScoreChanged',
-  gameStateChanged: 'GameStateChanged'
-};
-
 export const ARROW = {
   LEFT_UP: [-1, -1],
   UP: [0, -1],
@@ -30,7 +22,7 @@ export const RequestType = {
   replay: 'Replay'
 };
 
-export const ResponseType = {
+export const RESPONSE_TYPE = {
   playgroundCardsChanged: 'PlaygroundCardsChanged',
   candidateCardsChanged: 'CandidateCardsChanged',
   scoreChanged: 'ScoreChanged',
