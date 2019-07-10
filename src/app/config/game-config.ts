@@ -10,8 +10,7 @@ export const EVENT_TYPE = {
   candidateCardsChanged: 'CandidateCardsChanged',
   scoreChanged: 'ScoreChanged',
   bestScoreChanged: 'BestScoreChanged',
-  gameOver: 'GameOver',
-  gameStart: 'GameStart'
+  gameStateChanged: 'GameStateChanged'
 };
 
 export const ARROW = {
@@ -36,6 +35,5 @@ export const ResponseType = {
   candidateCardsChanged: 'CandidateCardsChanged',
   scoreChanged: 'ScoreChanged',
   bestScoreChanged: 'BestScoreChanged',
-  gameOver: 'GameOver',
-  gameStart: 'GameStart'
+  gameStateChanged: 'GameStateChanged'
 };

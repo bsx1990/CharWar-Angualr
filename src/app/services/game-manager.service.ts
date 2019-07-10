@@ -13,6 +13,7 @@ export class GameManagerService {
   public candidateCards = [];
   public score = 0;
   public bestScore = 0;
+  public gameState;
 
   private socket;
 
@@ -60,12 +61,11 @@ export class GameManagerService {
       this.emitBestScoreChanged();
     });
 
-    this.socket.on(ResponseType.gameOver, () => {
-      this.emitGameOver();
-    });
-
-    this.socket.on(ResponseType.gameStart, () => {
-      this.emitGameStart();
+    this.socket.on(ResponseType.gameStateChanged, data => {
+      this.gameState = data;
+      console.log('Received bestScoreChanged, current bestScore is:');
+      console.log(this.gameState);
+      this.emitGameStateChanged();
     });
   }
 
@@ -93,12 +93,8 @@ export class GameManagerService {
     this.emitService.eventEmit.emit(EVENT_TYPE.bestScoreChanged);
   }
 
-  private emitGameOver() {
-    this.emitService.eventEmit.emit(EVENT_TYPE.gameOver);
-  }
-
-  private emitGameStart() {
-    this.emitService.eventEmit.emit(EVENT_TYPE.gameStart);
+  private emitGameStateChanged() {
+    this.emitService.eventEmit.emit(EVENT_TYPE.gameStateChanged);
   }
 
   clickCard(rowIndex: number, columnIndex: number) {

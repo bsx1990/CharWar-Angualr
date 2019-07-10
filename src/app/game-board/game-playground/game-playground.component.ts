@@ -73,14 +73,8 @@ export class GamePlaygroundComponent implements OnInit {
     });
 
     this.emitService.eventEmit.subscribe((value: any) => {
-      if (value === EVENT_TYPE.gameOver) {
-        this.isGameOver = true;
-      }
-    });
-
-    this.emitService.eventEmit.subscribe((value: any) => {
-      if (value === EVENT_TYPE.gameStart) {
-        this.isGameOver = false;
+      if (value === EVENT_TYPE.gameStateChanged) {
+        this.isGameOver = this.gameManagerService.gameState === 'GameOver';
       }
     });
   }
