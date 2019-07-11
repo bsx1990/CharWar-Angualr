@@ -1,3 +1,4 @@
+import { GameManagerService } from './../services/game-manager.service';
 import { Component, OnInit } from '@angular/core';
 
 @Component({
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./game-board.component.scss']
 })
 export class GameBoardComponent implements OnInit {
+  constructor(private gameManagerService: GameManagerService) {}
 
-  constructor() { }
+  ngOnInit() {}
 
-  ngOnInit() {
+  ngAfterViewInit() {
+    this.gameManagerService.getData();
   }
-
 }

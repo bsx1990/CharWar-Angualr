@@ -19,7 +19,8 @@ export const ARROW = {
 export const RequestType = {
   getData: 'GetData',
   clickCard: 'ClickCard',
-  replay: 'Replay'
+  replay: 'Replay',
+  gameModeChanged: 'GameModeChanged'
 };
 
 export const RESPONSE_TYPE = {
@@ -28,4 +29,9 @@ export const RESPONSE_TYPE = {
   scoreChanged: 'ScoreChanged',
   bestScoreChanged: 'BestScoreChanged',
   gameStateChanged: 'GameStateChanged'
+};
+
+export const GAME_MODES = {
+  peace: 'Peace',
+  war: 'War'
 };

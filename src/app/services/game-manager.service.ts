@@ -19,7 +19,6 @@ export class GameManagerService {
   constructor(public emitService: EmitService) {
     this.initSocket();
     this.setSubscribe();
-    this.initialService();
   }
 
   private initSocket() {
@@ -68,10 +67,6 @@ export class GameManagerService {
     });
   }
 
-  private initialService() {
-    this.getData();
-  }
-
   getData() {
     this.socket.emit(RequestType.getData, this.socket.id);
   }
@@ -96,11 +91,15 @@ export class GameManagerService {
     this.emitService.eventEmit.emit(RESPONSE_TYPE.gameStateChanged);
   }
 
-  clickCard(rowIndex: number, columnIndex: number) {
+  public clickCard(rowIndex: number, columnIndex: number) {
     this.socket.emit(RequestType.clickCard, rowIndex, columnIndex);
   }
 
-  replay() {
+  public replay() {
     this.socket.emit(RequestType.replay);
+  }
+
+  public emitGameModeChanged(mode) {
+    this.socket.emit(RequestType.gameModeChanged, mode);
   }
 }

@@ -1,3 +1,4 @@
 <div class="options">
-  <button (click)="play()">Play</button>
+  <span class="options-title">Select Mode</span>
+  <button (click)="play(mode)" *ngFor="let mode of getKeys(allModes)">{{ allModes[mode] }}</button>
 </div>

@@ -1,13 +1,25 @@
 .options {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 400px;
+  text-align: center;
+
+  .options-title {
+    margin-bottom: 20px;
+    display: block;
+    color: #fff;
+  }
 
   button {
     min-width: 200px;
     background: transparent;
     border-color: black;
-    margin: 10px;
+    margin: 10px 100px;
+
+    &:last-child {
+      margin-bottom: 200px;
+    }
+  }
+
+  button:hover {
+    background-color: #47565a;
+    cursor: pointer;
   }
 }
