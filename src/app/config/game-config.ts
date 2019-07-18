@@ -28,7 +28,8 @@ export const RESPONSE_TYPE = {
   candidateCardsChanged: 'CandidateCardsChanged',
   scoreChanged: 'ScoreChanged',
   bestScoreChanged: 'BestScoreChanged',
-  gameStateChanged: 'GameStateChanged'
+  gameStateChanged: 'GameStateChanged',
+  playSkill: 'PlaySkill'
 };
 
 export const GAME_MODES = {

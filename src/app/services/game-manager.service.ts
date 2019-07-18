@@ -65,6 +65,11 @@ export class GameManagerService {
       console.log(this.gameState);
       this.emitGameStateChanged();
     });
+
+    this.socket.on(RESPONSE_TYPE.playSkill, data => {
+      console.log('Received playSkill, skill is:');
+      console.log(data);
+    });
   }
 
   getData() {
