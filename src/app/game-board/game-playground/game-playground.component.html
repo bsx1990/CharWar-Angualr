@@ -17,6 +17,8 @@
         <button (click)="replay()">Replay</button>
       </div>
     </div>
+
+    <div class="animation-text" @SkillAnimation *ngIf="isPlayingAnimation">{{ skill }}</div>
   </div>
 
   <div class="candidate-cards">

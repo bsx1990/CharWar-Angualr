@@ -13,6 +13,7 @@ export class GameManagerService {
   public score = 0;
   public bestScore = 0;
   public gameState;
+  public skill;
 
   private socket;
 
@@ -67,8 +68,10 @@ export class GameManagerService {
     });
 
     this.socket.on(RESPONSE_TYPE.playSkill, data => {
+      this.skill = data;
       console.log('Received playSkill, skill is:');
       console.log(data);
+      this.emitPlaySkill();
     });
   }
 
@@ -94,6 +97,10 @@ export class GameManagerService {
 
   private emitGameStateChanged() {
     this.emitService.eventEmit.emit(RESPONSE_TYPE.gameStateChanged);
+  }
+
+  private emitPlaySkill() {
+    this.emitService.eventEmit.emit(RESPONSE_TYPE.playSkill);
   }
 
   public clickCard(rowIndex: number, columnIndex: number) {

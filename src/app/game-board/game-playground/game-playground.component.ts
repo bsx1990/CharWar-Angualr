@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { EmitService } from 'src/app/services/emit.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { IntervalAutoSendQueue } from 'src/app/infrastructure/interval-auto-send-queue';
+import { empty } from 'rxjs';
 
 @Component({
   selector: 'game-playground',
@@ -24,6 +25,11 @@ import { IntervalAutoSendQueue } from 'src/app/infrastructure/interval-auto-send
         })
       ),
       transition('empty <=> not-empty', [animate(ANIMATION_TIME)])
+    ]),
+
+    trigger('SkillAnimation', [
+      transition(':enter', [style({ opacity: 0 }), animate(ANIMATION_TIME, style({ opacity: 1 }))]),
+      transition(':leave', [animate(ANIMATION_TIME, style({ opacity: 0 }))])
     ])
   ]
 })
@@ -31,6 +37,8 @@ export class GamePlaygroundComponent implements OnInit {
   public playgroundCards;
   public candidateCards = this.gameManagerService.candidateCards;
   public isGameOver = false;
+  public skill;
+  public isPlayingAnimation = false;
 
   private playgroundCardsChangingQueue;
 
@@ -74,6 +82,17 @@ export class GamePlaygroundComponent implements OnInit {
     this.emitService.eventEmit.subscribe((value: any) => {
       if (value === RESPONSE_TYPE.gameStateChanged) {
         this.isGameOver = this.gameManagerService.gameState === 'GameOver';
+      }
+    });
+
+    this.emitService.eventEmit.subscribe((value: any) => {
+      if (value === RESPONSE_TYPE.playSkill) {
+        this.isPlayingAnimation = true;
+        this.skill = this.gameManagerService.skill;
+        console.log(`skill: ${this.skill}`);
+        setInterval(() => {
+          this.isPlayingAnimation = false;
+        }, ANIMATION_TIME);
       }
     });
   }
