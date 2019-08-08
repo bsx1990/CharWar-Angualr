@@ -4,7 +4,6 @@ import { Component, OnInit } from '@angular/core';
 import { EmitService } from 'src/app/services/emit.service';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { IntervalAutoSendQueue } from 'src/app/infrastructure/interval-auto-send-queue';
-import { empty } from 'rxjs';
 
 @Component({
   selector: 'game-playground',
