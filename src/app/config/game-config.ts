@@ -2,6 +2,7 @@ export const PLAYGROUND_SIZE = 4;
 export const MAX_GENERATED_CARD = 9;
 export const ANIMATION_TIME = 500;
 export const HOST = 'ws://106.13.194.212:1001';
+// add test for pushing code to git hub, to see the jenkins job is called or not
 
 export const USING_STEP_BY_STEP_ANIMATION = false;
 
