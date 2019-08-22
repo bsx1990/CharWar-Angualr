@@ -1,7 +1,7 @@
 export const PLAYGROUND_SIZE = 4;
 export const MAX_GENERATED_CARD = 9;
 export const ANIMATION_TIME = 500;
-export const HOST = 'ws://192.168.12.65:1001';
+export const HOST = 'ws://106.13.194.212:1001';
 
 export const USING_STEP_BY_STEP_ANIMATION = false;
 
